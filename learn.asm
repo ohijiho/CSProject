@@ -124,25 +124,25 @@ b_new TEXTEQU <edi>
 _MIN:
 
 	;debug
-	mov edx, offset msg_a 
-	call WriteString
-	
-	mov eax, a
-	call WriteInt
-
-	mov edx, offset msg_b
-	call WriteString
-	
-	mov eax, b
-	call WriteInt
-	
-	mov edx, offset msg_k
-	call WriteString
-
-	mov eax, k
-	call WriteInt
-
-	call CrLf
+	;mov edx, offset msg_a 
+	;call WriteString
+	;
+	;mov eax, a
+	;call WriteInt
+	;
+	;mov edx, offset msg_b
+	;call WriteString
+	;
+	;mov eax, b
+	;call WriteInt
+	;
+	;mov edx, offset msg_k
+	;call WriteString
+	;
+	;mov eax, k
+	;call WriteInt
+	;
+	;call CrLf
 
 _END:
 

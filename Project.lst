@@ -1,5 +1,5 @@
-Microsoft (R) Macro Assembler Version 14.00.24210.0	    05/30/18 17:55:56
-test.asm						     Page 1 - 1
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    05/30/18 20:31:08
+manual.asm						     Page 1 - 1
 
 
 				include Irvine32.inc
@@ -21,65 +21,68 @@ test.asm						     Page 1 - 1
 			      C .LIST
 			      C 
 
-				learn PROTO
-				query PROTO
+				learn proto
 
  00000000			.data
 
+ 00000000 00000000		prevx dword ?
+ 00000004 00000000		prevy dword ?
+ 00000008 00000000		cnt dword 0
+
  00000000			.code
 
- 00000000			main proc
+				;args - SDWORD 10 * x, 10 * y
+				;return - eax: resulting temp
+ 00000000			manual proc
+					
+ 00000000  55				push ebp
+ 00000001  8B EC			mov ebp, esp
 
-					;push 297
-					;push 250
-					;push 274
-					;push 220
-					;call learn
+ 00000003  53				push ebx
+ 00000004  51				push ecx
+ 00000005  52				push edx
 
-					;push 274
-					;push 220
-					;push 280
-					;push 230
-					;call learn
+ 00000006  8B 5D 0C			mov ebx, [ebp + 12]
+ 00000009  8B 45 08			mov eax, [ebp + 8]
 
- 00000000  BB 0000000A			mov ebx, 10
+ 0000000C  8B 0D 00000008 R		mov ecx, cnt
 
- 00000005  B8 00000105			mov eax, 261
- 0000000A  E8 00000000 E		call query
- 0000000F  83 C0 05			add eax, 5
- 00000012  99				cdq
- 00000013  F7 F3			div ebx
- 00000015  E8 00000000 E		call WriteInt
- 0000001A  E8 00000000 E		call CrLf
+					;test ecx, ecx
+ 00000012  F7 C1 00000001		test ecx, 1
+ 00000018  74 13			jz _dont_learn
 
- 0000001F  B8 00000125			mov eax, 293
- 00000024  E8 00000000 E		call query
- 00000029  83 C0 05			add eax, 5
- 0000002C  99				cdq
- 0000002D  F7 F3			div ebx
- 0000002F  E8 00000000 E		call WriteInt
- 00000034  E8 00000000 E		call CrLf
+ 0000001A  FF 35 00000000 R		push prevx
+ 00000020  FF 35 00000004 R		push prevy
+ 00000026  53				push ebx
+ 00000027  50				push eax
+ 00000028  E8 00000000 E		call learn
+ 0000002D			_dont_learn:
+ 0000002D  41				inc ecx
+ 0000002E  89 0D 00000008 R		mov cnt, ecx
+ 00000034  89 1D 00000000 R		mov prevx, ebx
+ 0000003A  A3 00000004 R		mov prevy, eax
 
- 00000039  B8 00000112			mov eax, 274
- 0000003E  E8 00000000 E		call query
- 00000043  83 C0 05			add eax, 5
- 00000046  99				cdq
- 00000047  F7 F3			div ebx
- 00000049  E8 00000000 E		call WriteInt
- 0000004E  E8 00000000 E		call CrLf
+ 0000003F  83 C0 05			add eax, 5
+ 00000042  99				cdq
+ 00000043  BB 0000000A			mov ebx, 10
+ 00000048  F7 F3			div ebx
+					
+ 0000004A  8B 5D 04			mov ebx, [ebp + 4]
+ 0000004D  89 5D 0C			mov [ebp + 12], ebx
 
-					invoke WaitMsg
- 00000053  E8 00000000 E   *	    call   WaitMsg
+ 00000050  5A				pop edx
+ 00000051  59				pop ecx
+ 00000052  5B				pop ebx
 
-					invoke ExitProcess, 0
- 00000058  6A 00	   *	    push   +000000000h
- 0000005A  E8 00000000 E   *	    call   ExitProcess
- 0000005F			main endp
+ 00000053  5D				pop ebp
+ 00000054  83 C4 08			add esp, 8
 
+ 00000057  C3				ret
+ 00000058			manual endp
 
-				end main
-Microsoft (R) Macro Assembler Version 14.00.24210.0	    05/30/18 17:55:56
-test.asm						     Symbols 2 - 1
+				end
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    05/30/18 20:31:08
+manual.asm						     Symbols 2 - 1
 
 
 
@@ -172,8 +175,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000005F Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000000C Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000058 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -281,9 +284,9 @@ WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 learn  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000005F Public STDCALL
+manual . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000058 Public STDCALL
+  _dont_learn  . . . . . . . . .	L Near	 0000002D _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
-query  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 
@@ -504,6 +507,7 @@ WriteConsole . . . . . . . . . .	Text   	 WriteConsoleA
 black  . . . . . . . . . . . . .	Number	 00000000h   
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
+cnt  . . . . . . . . . . . . . .	DWord	 00000008 _DATA	
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
 gray . . . . . . . . . . . . . .	Number	 00000008h   
@@ -515,6 +519,8 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
+prevx  . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+prevy  . . . . . . . . . . . . .	DWord	 00000004 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA

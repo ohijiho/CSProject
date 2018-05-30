@@ -11,7 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <MASM Include="auto.asm" />
     <MASM Include="learn.asm" />
+    <MASM Include="manual.asm" />
     <MASM Include="test.asm" />
     <MASM Include="weight.asm" />
   </ItemGroup>
