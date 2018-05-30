@@ -1,15 +1,10 @@
 
-*.obj
-*.tlog
 *.db
 *.opendb
+*.tlog
+*.obj
+*.ilk
+*.pdb
+*.exe
 *.lst
 *.sdf
-*.exe
-*.ilk
-*.lastbuildstate
-*.log
-*.pdb
-*.unsuccessfulbuild
-*.sln
-*.user
