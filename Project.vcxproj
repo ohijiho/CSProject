@@ -14,8 +14,11 @@
     <MASM Include="auto.asm" />
     <MASM Include="learn.asm" />
     <MASM Include="manual.asm" />
+    <MASM Include="ReadLine.asm" />
     <MASM Include="test.asm" />
+    <MASM Include="testREADING.asm" />
     <MASM Include="weight.asm" />
+    <MASM Include="wirteoutput.asm" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />

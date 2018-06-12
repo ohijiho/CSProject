@@ -8,3 +8,5 @@
 *.exe
 *.lst
 *.sdf
+*.log
+*.suo

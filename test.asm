@@ -15,7 +15,7 @@ printa proto
 
 .code
 
-main proc
+main2 proc
 
 	push 297
 	push 250
@@ -45,7 +45,7 @@ main proc
 	invoke WaitMsg
 
 	invoke ExitProcess, 0
-main endp
+main2 endp
 
 printm proc
 	
@@ -73,4 +73,4 @@ printa proc
 	ret
 printa endp
 
-end main
+end main2

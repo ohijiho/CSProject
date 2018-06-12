@@ -11,7 +11,7 @@ WriteLine proto
      errMsg BYTE "Cannot open file", 0dh, 0ah, 0
 
 .code
-why proc
+main proc
      INVOKE CreateFile, ADDR infilename, GENERIC_READ, DO_NOT_SHARE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0
      mov infileHandle, eax
      .IF eax == INVALID_HANDLE_VALUE
@@ -41,5 +41,5 @@ why proc
 
 QuitNow:
 invoke ExitProcess, 0
-why endp
-end why
+main endp
+end main
