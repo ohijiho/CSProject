@@ -10,19 +10,12 @@ cnt dword 0
 
 .code
 
-;args - SDWORD 10 * x, 10 * y
+;args - eax: 10 * x, ebx: 10 * y
 ;return - eax: resulting temp
 manual proc
 	
-	push ebp
-	mov ebp, esp
-
-	push ebx
 	push ecx
 	push edx
-
-	mov ebx, [ebp + 12]
-	mov eax, [ebp + 8]
 
 	mov ecx, cnt
 
@@ -33,29 +26,23 @@ manual proc
 
 	push prevx
 	push prevy
-	push ebx
 	push eax
+	push ebx
 	call learn
 _dont_learn:
 	inc ecx
 	mov cnt, ecx
-	mov prevx, ebx
-	mov prevy, eax
+	mov prevx, eax
+	mov prevy, ebx
 
+	mov eax, ebx
 	add eax, 5
 	cdq
-	mov ebx, 10
-	div ebx
+	mov ecx, 10
+	div ecx
 	
-	mov ebx, [ebp + 4]
-	mov [ebp + 12], ebx
-
 	pop edx
 	pop ecx
-	pop ebx
-
-	pop ebp
-	add esp, 8
 
 	ret
 manual endp

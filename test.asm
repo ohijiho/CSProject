@@ -15,7 +15,7 @@ printa proto
 
 .code
 
-main2 proc
+test1 proc
 
 	push 297
 	push 250
@@ -29,48 +29,49 @@ main2 proc
 	push 230
 	call printm
 
-	mov eax, 261
+	push 261
 	call printa
 
-	mov eax, 293
+	push 293
 	call printa
 
 	push 262
 	push 210
 	call printm
 
-	mov eax, 274
+	push 274
 	call printa
 
 	invoke WaitMsg
 
-	invoke ExitProcess, 0
-main2 endp
+	ret
+test1 endp
 
 printm proc
-	
 	push eax
 	push ebx
-	mov ebx, [esp + 8]
-	mov eax, [esp + 12]
-	mov [esp + 8], eax
 	mov eax, [esp + 16]
-	mov [esp + 12], eax
-	mov [esp + 16], ebx
-	pop ebx
-	pop eax
+	mov ebx, [esp + 12]
 
 	call manual
 	call WriteDec
 	call CrLf
-	ret
+
+	pop ebx
+	pop eax
+	ret 8
 printm endp
 
 printa proc
+	push eax
+	mov eax, [esp + 8]
+
 	call auto
 	call WriteDec
 	call CrLf
-	ret
+	
+	pop eax
+	ret 4
 printa endp
 
-end main2
+end

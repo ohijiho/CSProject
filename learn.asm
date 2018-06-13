@@ -4,9 +4,9 @@ weight proto
 
 .data
 
-a SDWORD 1000000;/1000000
-b SDWORD -50000000;/1000000, (-50)
-abd = 1000000
+a SDWORD 100000;/100000
+b SDWORD -5000000;/100000, (-50)
+abd = 100000
 k DWORD 10;/10
 kd = 10
 
@@ -26,7 +26,7 @@ y2 TEXTEQU <SDWORD ptr [ebp + 8]>
 	push ebp
 	mov ebp, esp
 
-	;sub esp, 16
+	;add esp, -16
 a1 TEXTEQU <esi>
 b1 TEXTEQU <edi>
 a_new TEXTEQU <esi>
@@ -146,9 +146,6 @@ _MIN:
 
 _END:
 
-	mov eax, [ebp + 4]
-	mov [ebp + 20], eax
-
 	pop edi
 	pop esi
 	pop edx
@@ -156,11 +153,9 @@ _END:
 	pop ebx
 	pop eax
 
-	;add esp, 16
-	
+	;mov esp, ebp
 	pop ebp
-	add esp, 16
-	ret
+	ret 16
 
 _ERR:
 	;handle any error
@@ -169,20 +164,23 @@ _ERR:
 learn endp
 
 query proc;eax: x * id
-	push edx
 	push ebx
+	push ecx
+	push edx
 
 	;eax = ((a * abd) * eax + (b * abd)) / abd
 	imul a
-	add eax, b
 	mov ebx, b
-	sar ebx, 31
-	adc edx, ebx
+	mov ecx, ebx
+	sar ecx, 31
+	add eax, ebx
+	adc edx, ecx
 	mov ebx, abd
 	idiv ebx
 
-	pop ebx
 	pop edx
+	pop ecx
+	pop ebx
 
 	ret
 query endp

@@ -19,8 +19,8 @@ auto proc
 	mov ebx, 10
 	div ebx
 
-	pop ebx
 	pop edx
+	pop ebx
 
 	ret
 auto endp

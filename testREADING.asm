@@ -2,44 +2,80 @@ include Irvine32.inc
 
 ReadLine proto
 WriteLine proto
+file_writeln_int proto
+manual proto
+auto proto
 
 .data
-     infilename BYTE "input.txt", 0
-     outfilename BYTE "output.txt",0
-     infileHandle DWORD ?
-     outfileHandle DWORD ?
-     errMsg BYTE "Cannot open file", 0dh, 0ah, 0
+    infilename BYTE "input.txt", 0
+    outfilename BYTE "output.txt",0
+    errMsg BYTE "Cannot open file", 0dh, 0ah, 0
 
 .code
-main proc
-     INVOKE CreateFile, ADDR infilename, GENERIC_READ, DO_NOT_SHARE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0
-     mov infileHandle, eax
-     .IF eax == INVALID_HANDLE_VALUE
-          mov edx, OFFSET errMsg; display error message
-          call WriteString
-          jmp QuitNow
-     .ENDIF
+test2 proc
 
-     INVOKE createFile, ADDR outfilename, GENERIC_WRITE, DO_NOT_SHARE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0
-     mov outfileHandle, eax
+	push ebp
+	mov ebp, esp
+	;add esp, -8
+	push eax
+	push ebx
+	push ecx
+	push edx
+	push esi
+	push edi
+	
+    INVOKE CreateFile, ADDR infilename, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0
+	mov esi, eax
+	cmp eax, -1
+	je ERROR1
 
-     mov eax, infileHandle
-     call ReadLine
-     mov eax, infileHandle
-     call ReadLine
+    INVOKE createFile, ADDR outfilename, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0
+    mov edi, eax
+	cmp eax, -1
+	je ERROR2
 
-     mov eax,25
-     mov ebx,outfileHandle
-     call WriteLine
+_READ:
+    mov eax, esi
+    call ReadLine
 
-     mov eax, infileHandle
-     INVOKE CloseHandle, eax
-     mov eax, outfileHandle
-     INVOKE CloseHandle, eax
+	cmp eax, -1
+	je _ENDREAD
+	cmp ebx, -1
+	je _AUTO
 
+	call manual
+	jmp _WRITE
+_AUTO:
+	call auto
 
+_WRITE:
+    mov ebx,edi
+    call file_writeln_int
+	jmp _READ
+
+_ENDREAD:
+    INVOKE CloseHandle, esi
+    INVOKE CloseHandle, edi
 
 QuitNow:
-invoke ExitProcess, 0
-main endp
-end main
+	pop edi
+	pop esi
+	pop edx
+	pop ecx
+	pop ebx
+	pop eax
+	;mov esp, ebp
+	pop ebp
+	ret
+
+ERROR2:
+    INVOKE CloseHandle, esi
+	;jmp ERROR1
+	
+ERROR1:
+    mov edx, OFFSET errMsg; display error message
+    call WriteString
+    jmp QuitNow
+test2 endp
+
+end
