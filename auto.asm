@@ -13,11 +13,11 @@ auto proc
 	push ebx
 	push edx
 
-	call query
+	call query		;f(x)를 계산하고
 	add eax, 5
 	cdq
 	mov ebx, 10
-	div ebx
+	div ebx			;반올림함
 
 	pop edx
 	pop ebx
