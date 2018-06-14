@@ -18,7 +18,7 @@ msg_k BYTE ", k: ", 0
 
 ;input must be less than 1000 (100'C)
 ;expensive
-learn proc;x1, y1, x2, y2, /10
+learn proc;x1, y1, x2, y2, /10 returns void
 id = 10
 x1 TEXTEQU <SDWORD ptr [ebp + 20]>
 y1 TEXTEQU <SDWORD ptr [ebp + 16]>
