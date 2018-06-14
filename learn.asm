@@ -17,6 +17,7 @@ msg_k BYTE ", k: ", 0
 .code
 
 ;input must be less than 1000 (100'C)
+;expensive
 learn proc;x1, y1, x2, y2, /10
 id = 10
 x1 TEXTEQU <SDWORD ptr [ebp + 20]>
@@ -65,12 +66,6 @@ b_new TEXTEQU <edi>
 	imul edx
 	idiv ebx
 	mov a1, eax
-
-	;ebx = id * ebx, no of
-	;mov eax, id
-	;imul ebx
-	;jo _ERR
-	;mov ebx, eax
 
 	;ecx = x1 * y2
 	mov eax, x1
@@ -163,6 +158,7 @@ _ERR:
 
 learn endp
 
+;cheap
 query proc;eax: x * id
 	push ebx
 	push ecx
