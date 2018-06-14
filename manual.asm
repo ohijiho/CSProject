@@ -82,7 +82,7 @@ _dont_use:
 	;add eax, 5;y is integer round = floor
 	cdq
 	mov ecx, 10
-	div ecx				;결과를 반올림, 목표온도는 항상 정수이므로 성능을 위해 내림함
+	div ecx				;결과(입력된 목표온도)를 반올림, 목표온도는 항상 정수이므로 성능을 위해 내림함
 	
 	pop edx
 	pop ecx
