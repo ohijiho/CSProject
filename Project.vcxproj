@@ -17,10 +17,8 @@
     <MASM Include="main.asm" />
     <MASM Include="manual.asm" />
     <MASM Include="ReadLine.asm" />
-    <MASM Include="test.asm" />
-    <MASM Include="testREADING.asm" />
+    <MASM Include="main2.asm" />
     <MASM Include="weight.asm" />
-    <MASM Include="wirteoutput.asm" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />

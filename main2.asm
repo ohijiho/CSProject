@@ -12,7 +12,7 @@ auto proto
     errMsg BYTE "Cannot open file", 0dh, 0ah, 0
 
 .code
-test2 proc
+main2 proc
 
 	push ebp
 	mov ebp, esp
@@ -76,6 +76,6 @@ ERROR1:
     mov edx, OFFSET errMsg; display error message
     call WriteString
     jmp QuitNow
-test2 endp
+main2 endp
 
 end
