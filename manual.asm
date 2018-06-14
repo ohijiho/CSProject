@@ -6,6 +6,7 @@ learn proto
 
 prevx dword ?
 prevy dword ?
+prevprevy dword ?
 cnt dword 0
 
 .code
@@ -19,10 +20,25 @@ manual proc
 
 	mov ecx, cnt
 
-	;;;(c)를 여기에 구현
-	;test ecx, ecx
-	test ecx, 1
-	jz _dont_learn
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	cmp ecx, 2
+	jb _dont_learn				; 세 번째 input부터는 적당히 거름
+
+	mov edx, ebx
+	mov ecx, prevprevy
+	not ecx;-ecx - 1
+	add edx, ecx
+	cmp edx, 2
+	jbe _dont_learn	; y 입력값이 그 전 전 입력값에서 +-1 범위 내일 경우
+	;0 <= y - prevprevy + 1 <= 2
+
+	mov edx, ebx
+	mov ecx, prevy
+	not ecx;-ecx - 1
+	add edx, ecx
+	cmp edx, 2
+	jbe _dont_learn		; y 입력값이 그 전 입력값에서 +-1 범위 내일 경우
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	push prevx
 	push prevy
@@ -32,6 +48,8 @@ manual proc
 _dont_learn:
 	inc ecx
 	mov cnt, ecx
+	mov edx, prevy
+	mov prevprevy, edx		; 전 전 y값을 저장함
 	mov prevx, eax
 	mov prevy, ebx
 
