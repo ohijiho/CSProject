@@ -14,10 +14,9 @@
     <MASM Include="auto.asm" />
     <MASM Include="file.asm" />
     <MASM Include="learn.asm" />
-    <MASM Include="main.asm" />
     <MASM Include="manual.asm" />
     <MASM Include="ReadLine.asm" />
-    <MASM Include="main2.asm" />
+    <MASM Include="main.asm" />
     <MASM Include="weight.asm" />
   </ItemGroup>
   <ItemGroup>
